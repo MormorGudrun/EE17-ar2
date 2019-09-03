@@ -1,0 +1,12 @@
+body {
+    background: url(https://snuskompaniet.se/images/zoom/general_snus_one_white_70.png) repeat;
+    background-size: 100px;
+}
+.kontainer {
+    width: 500px;
+    background: #000;
+    color: #FFF;
+    margin: 30px auto;
+    padding: 30px;
+    text-align: center;
+}
