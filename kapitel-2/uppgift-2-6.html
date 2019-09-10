@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Uppgift 2.6</title>
+    <link rel="stylesheet" href="https://cdn.rawgit.com/Chalarangelo/mini.css/v3.0.1/dist/mini-default.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <form action="./script-2-6.php" method="POST">
+    <h2>Hur varmt är det?</h2><br>
+    <label>Temperaturomvandlare</label>
+    <input type="number" name="temp" placeholder="17°C" required>
+
+    <label>Riktning</label>
+    <div>
+        <input type="radio" name="riktning" value="CF" checked>C&deg; till  
+        F&deg;
+        <input type="radio" name="riktning" value="FC">F&deg; till C&deg;
+        <input type="radio" name="riktning" value="CK">C&deg; till K&deg;
+        
+    </div>
+
+    <button class="primary">skicka</button>
+    </form>
+</body>
+</html>
