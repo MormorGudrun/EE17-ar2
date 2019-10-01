@@ -1,9 +1,6 @@
 table {
     width: 300px;
 }
-.kol2 {
-    width: 600px;
-}
 form {
     width: 80%;
     margin: 30px auto;
@@ -12,6 +9,12 @@ form {
     grid-template-columns: 1fr 2fr;
     grid-gap: 20px;
     background: #FFF;
+}
+form label {
+    font-weight: bold;
+}
+form input[type="text"] {
+    grid-column: 2;
 }
 .kontainer {
     width: 600px;
@@ -23,5 +26,5 @@ form {
     border-radius: 10px;
 }
 table tr.grå td {
-background: #999;
+    background: #999;
 }
