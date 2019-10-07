@@ -54,7 +54,7 @@
             /* Dela upp texten i dess bokstäver */
             $texten = strtoupper($texten);
             $delar = str_split($texten);
-            var_dump($delar);
+           /* var_dump($delar); */
     
             /* Skriv ut texten i moreskod */
             echo "<p>$texten</p>";
