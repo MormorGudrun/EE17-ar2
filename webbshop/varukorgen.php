@@ -38,24 +38,31 @@ if ($vara) {
 if (is_readable($varukorg)) {
     /* Läs in textfilen varukorg.txt i en array */
     $rader = file($varukorg);
-
-    /* Skriv ut som tabell */
-    echo "<table>";
-    echo "<tr><th>Vara</th><th>Pris</th></tr>";
-    foreach ($rader as $rad) {
-        $vara = vara($rad);
-        $pris = pris($rad);
-
-
-        echo "<tr><td>$vara</td><td>$pris</td></tr>";
-    }
-    echo "</table>";
+    $total = 0;
+        /* Skriv ut som tabell */
+        echo "<table>";
+        echo "<thead>";
+        echo "<tr><th>Vara</th><th>Pris</th></tr>";
+        echo "</thead>";
+        echo "<tbody>";
+        foreach ($rader as $rad) {
+            $vara = vara($rad);
+            $pris = pris($rad);
+            $total = $total + $pris;
+    
+            echo "<tr><td>$vara</td><td>$pris:-</td></tr>";
+        }
+        echo "</tbody>";
+        echo "<tfoot>";
+        echo "<tr><td>Totalt</td><td>$total:-</td></tr>";
+        echo "</tfoot>";
+        echo "</table>";
 } else {
     echo "<p>varukorgen saknas!</p>";
 }
 
 ?>
-       
+  <a class="knapp" href="./steg1-cpu.php">Börja om!</a>     
         
     </div>
 </body>

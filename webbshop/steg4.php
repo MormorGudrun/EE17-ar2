@@ -19,6 +19,30 @@ include_once "./funktioner.inc.php";
 <body>
     <div class="kontainer">
         <h1>Bygg en egen PC - steg 4</h1>
+        
+        <h2>Välj Disk</h2>
+        <form action="./steg5.php" method="post">
+        <?php
+/* Lista alla produkter i katalogen */
+$katalog = "./shop-bilder/disk";
+
+$filer = scandir($katalog);
+foreach ($filer as $fil) {
+    $info = pathinfo("./$fil");
+    if ($info['extension'] == 'png') {
+        echo "<label>";
+        echo "<input type=\"radio\" name=\"vara\" value=\"$fil\" required>";
+        echo "<img src=\"$katalog/$fil\">";
+        $vara = vara($fil);
+        $pris = pris($fil);
+        echo "$vara $pris:-";
+        echo "</label>";
+    }
+}
+
+?>
+        <button>Nästa</button>
+        </form>
         <h2>Varukorg</h2>
         <?php
 /* Visa innehållet på varukorgen = varukorg.txt*/
@@ -38,46 +62,32 @@ if ($vara) {
 
 if (is_readable($varukorg)) {
     $rader = file($varukorg);
+    $total = 0;
 
     /* Skriv ut som tabell */
     echo "<table>";
+    echo "<thead>";
     echo "<tr><th>Vara</th><th>Pris</th></tr>";
+    echo "</thead>";
+    echo "<tbody>";
     foreach ($rader as $rad) {
         $vara = vara($rad);
         $pris = pris($rad);
+        $total = $total + $pris;
 
-
-        echo "<tr><td>$vara</td><td>$pris</td></tr>";
+        echo "<tr><td>$vara</td><td>$pris:-</td></tr>";
     }
+    echo "</tbody>";
+    echo "<tfoot>";
+    echo "<tr><td>Totalt</td><td>$total:-</td></tr>";
+    echo "</tfoot>";
     echo "</table>";
 } else {
     echo "<p>varukorgen saknas!</p>";
 }
 
 ?>
-        <h2>Välj Disk</h2>
-        <form action="./steg5.php" method="post">
-        <?php
-/* Lista alla produkter i katalogen */
-$katalog = "./shop-bilder/disk";
-
-$filer = scandir($katalog);
-foreach ($filer as $fil) {
-    $info = pathinfo("./$fil");
-    if ($info['extension'] == 'png') {
-        echo "<label>";
-        echo "<input type=\"radio\" name=\"vara\" value=\"$fil\">";
-        echo "<img src=\"$katalog/$fil\">";
-        $vara = vara($fil);
-        $pris = pris($fil);
-        echo "$vara $pris:-";
-        echo "</label>";
-    }
-}
-
-?>
-        <button>Nästa</button>
-        </form>
+        
     </div>
 </body>
 </html>

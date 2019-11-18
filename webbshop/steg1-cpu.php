@@ -30,7 +30,7 @@ foreach ($filer as $fil) {
     $info = pathinfo("./$fil");
     if ($info['extension'] == 'jpg') {
         echo "<label>";
-        echo "<input type=\"radio\" name=\"vara\" value=\"$fil\">";
+        echo "<input type=\"radio\" name=\"vara\" value=\"$fil\" required>";
         echo "<img src=\"$katalog/$fil\">";
         $vara = vara($fil);
         $pris = pris($fil);
