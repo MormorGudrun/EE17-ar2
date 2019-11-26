@@ -19,6 +19,7 @@
         $filnamn = 'blogg.txt';
         if (is_readable($filnamn)) {
             $file = file($filnamn);
+            $file = array_reverse($file);
             foreach ($file as $files) {
                echo "<p>$files</p>";
             }

@@ -23,10 +23,10 @@
         $filnamn = 'blogg.txt';
         $skriva = filter_input(INPUT_POST, 'skriva', FILTER_SANITIZE_STRING);
         if ($skriva) {
-            $nu = new DateTime();
+            $datum = date("F j, Y, g:i a");
             $handtag = fopen($filnamn, 'a');
 
-            fwrite($handtag, "$skriva\n");
+            fwrite($handtag, "\n$skriva, \n$datum");
 
             fclose($handtag);
             
