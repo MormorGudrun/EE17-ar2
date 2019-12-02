@@ -33,7 +33,7 @@ if (!$_SESSION['login']) {
             </ul>
         </nav>
         <?php
-          session_destroy();
+        $_SESSION['login'] = false;
           echo "<p class=\"alert alert-success\">Du är nu utloggad!</p>";
         ?>
         
