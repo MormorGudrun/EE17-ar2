@@ -1,3 +1,23 @@
+<<?php
+/*
+* PHP version 7
+* @category   
+* @author     Carl-Axel Jirner <carl-axel.jirner@gmail.com>
+* @license    PHP CC
+*/
+session_start();
+
+var_dump($_SESSION['login']);
+
+/* Är användaren inte inloggad? */
+if (!$_SESSION['login']) {
+       /* Nej, gå till loginsidan */
+       $_SESSION['login'] = false;
+    /* Gå till loginsidan */
+    header("Location: ./login.php?fran=skriva");
+} 
+
+?>
 <!DOCTYPE html>
 <html lang="sv">
 <head>
@@ -13,6 +33,11 @@
             <ul class="nav nav-tabs">
                 <li class="nav-item"><a class="nav-link" href="./läsa.php">Läsa</a></li>
                 <li class="nav-item"><a class="nav-link active" href="./skriva.php">Skriva</a></li>
+                <?php if (!$_SESSION['login']) { ?>
+                <li class="nav-item"><a class="nav-link" href="./login.php">Logga in</a></li>
+                <?php } else {  ?>
+                <li class="nav-item"><a class="nav-link" href="./logout.php">Logga ut</a></li>
+                <?php } ?>
             </ul>
         </nav>
         <form action="#" method="POST">
@@ -26,7 +51,7 @@
             $datum = date("F j, Y, g:i a");
             $handtag = fopen($filnamn, 'a');
 
-            fwrite($handtag, "\n$skriva, \n$datum");
+            fwrite($handtag, "\n$skriva \n$datum");
 
             fclose($handtag);
             

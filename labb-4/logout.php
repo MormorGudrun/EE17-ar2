@@ -1,3 +1,17 @@
+<?php
+/*
+* PHP version 7
+* @category   
+* @author     Carl-Axel Jirner <carl-axel.jirner@gmail.com>
+* @license    PHP CC
+*/
+session_start();
+/* Är användaren inte inloggad? */
+if (!$_SESSION['login']) {
+    /* Nej, gå till loginsidan */
+    $_SESSION['login'] = false;
+}
+?>
 <!DOCTYPE html>
 <html lang="sv">
 <head>
@@ -11,23 +25,18 @@
     <div class="kontainer">
         <nav>
             <ul class="nav nav-tabs">
-                <li class="nav-item"><a class="nav-link active" href="./läsa.php">Läsa</a></li>
+                <li class="nav-item"><a class="nav-link" href="./läsa.php">Läsa</a></li>
                 <li class="nav-item"><a class="nav-link" href="./skriva.php">Skriva</a></li>
+                <li class="nav-item"><a class="nav-link" href="./login.php">Logga in</a></li>
+                <li class="nav-item"><a class="nav-link " href="./logout.php">Logga ut</a></li>
+                
             </ul>
         </nav>
         <?php
-        $filnamn = 'blogg.txt';
-        if (is_readable($filnamn)) {
-            $file = file($filnamn);
-            $file = array_reverse($file);
-            foreach ($file as $files) {
-               echo "<p>$files</p>";
-            }
-        } else {
-            echo "<p>Texten kan inte läsas!</p>";
-        }
-        
+          session_destroy();
+          echo "<p class=\"alert alert-success\">Du är nu utloggad!</p>";
         ?>
+        
     </div>
 </body>
 </html>
