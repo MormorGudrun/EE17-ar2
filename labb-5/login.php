@@ -23,12 +23,31 @@ if (!$_SESSION['login']) {
 </head>
 <body>
 <?php
-    $anamn = filter_input(INPUT_POST, 'anamn', FILTER_SANITIZE_STRING);
-    $lösen = filter_input(INPUT_POST, 'lösen', FILTER_SANITIZE_STRING);
+    $namn = filter_input(INPUT_POST, 'anamn', FILTER_SANITIZE_STRING);
+    $password = filter_input(INPUT_POST, 'lösen', FILTER_SANITIZE_STRING);
 
-    if ($anamn == "howimetyourobi" && $lösen == "123") {
-        $_SESSION['login'] = true;
+    if ($namn && $password) {
+        $rader = file("info.txt") or die("Kan inte öppna filen");
+        foreach ($rader as $rad) {
+            $delar = explode(" ", $rad);
+            $nyNamn = $delar[0];
+            $hash = $delar[1];
+    
+            if ($namn == $nyNamn) {
+    
+                if (password_verify($password, $hash)) {
+                    
+                    $_SESSION['login'] = true;
+                } else {
+                    echo "<p>Fel inloggning</p>";
+                    
+                }
+            }
+        }
+        
     }
+
+  
 ?>
     <div class="kontainer">
         <nav>
