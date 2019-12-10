@@ -7,9 +7,8 @@
 */
 session_start();
 /* Är användaren inte inloggad? */
-if (!$_SESSION['login']) {
-    /* Nej, gå till loginsidan */
-    $_SESSION['login'] = false;
+if (!isset($_SESSION['login'])) {
+  
 }
 ?>
 <!DOCTYPE html>
