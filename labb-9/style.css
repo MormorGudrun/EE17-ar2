@@ -14,17 +14,17 @@ body, h1, h2, h3, h4, h5, h6, p, ul {
 }
 
 body {
-    background: #F9F6EB;
+    background: url(./bilder/130157.jpg);
 }
 .kontainer {
-    width: 600px;
+    width: 800px;
     padding: 2em;
     margin: 3em auto;
     background: #fff;
     border-radius: 5px;
     font-family: 'Source Sans Pro', sans-serif;
-    border: 1px solid #ddd;
-    box-shadow: 0 0 12px #f0e9d1;
+    border: 1px solid rgb(64, 145, 212);
+    box-shadow: 0 0 12px #39adc2;
     color: #4e4e4e;
 }
 .kol2 {
@@ -69,13 +69,16 @@ button {
     background-color: #55a5d2;
 }
 h1, h2, h3 {
-    color: #9c813d;
+    color: #57a1cc;
 }
 h1, h2, h3, p {
     margin: 0.5em 0;
 }
 h3 {
     margin-top: 2em;
+}
+h5 {
+    margin-bottom: 1em;
 }
 
 table {

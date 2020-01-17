@@ -23,9 +23,9 @@ include_once "./konfig-db.php";
         <nav>
             <ul class="nav nav-tabs">
                 <li class="nav-item"><a class="nav-link active" href="./lasa.php">Läsa</a></li>
-                <li class="nav-item"><a class="nav-link" href="./skriva.php">Skriva</a></li>
                 <?php if (!isset($_SESSION['login'])) { ?>
-                <li class="nav-item"><a class="nav-link" href="./admin.php">Admin</a></li>
+                <li class="nav-item"><a class="nav-link" href="./sok.php">Sök</a></li>
+                <li class="nav-item"><a class="nav-link" href="./admin/admin.php">Admin</a></li>
                 <?php } else {  ?>
               
                 <?php } ?>
@@ -44,7 +44,7 @@ include_once "./konfig-db.php";
         }
 
         /* 2. SQL */
-        $sql = "SELECT * FROM blogg";
+        $sql = "SELECT * FROM blogg ORDER BY id DESC";
         /* Bearbeta svaret frpån databasen */
         $result = $conn->query($sql);
         /* Gick det bra? */
