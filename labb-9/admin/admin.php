@@ -7,7 +7,7 @@
 */
 session_start();
 /* Är användaren inte inloggad? */
-include_once "../konfig-db.php";
+include_once "./konfig-db.php";
 ?>
 <!DOCTYPE html>
 <html lang="sv">
