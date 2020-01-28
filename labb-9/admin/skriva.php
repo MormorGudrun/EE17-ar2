@@ -19,6 +19,7 @@ include_once "./konfig-db.php";
 </head>
 <body>
     <div class="kontainer">
+        
     <h1>Bloggen</h1>
         <nav>
             <ul class="nav nav-tabs">
@@ -32,6 +33,7 @@ include_once "./konfig-db.php";
                 <?php }?>
             </ul>
         </nav>
+        
 
         <form action="#" method="POST">
         <label>Rubrik</label>
