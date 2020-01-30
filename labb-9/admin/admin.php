@@ -1,10 +1,10 @@
 <?php
 /*
-* PHP version 7
-* @category   
-* @author     Carl-Axel Jirner <carl-axel.jirner@gmail.com>
-* @license    PHP CC
-*/
+ * PHP version 7
+ * @category
+ * @author     Carl-Axel Jirner <carl-axel.jirner@gmail.com>
+ * @license    PHP CC
+ */
 session_start();
 /* Är användaren inte inloggad? */
 include_once "./konfig-db.php";
@@ -22,47 +22,47 @@ include_once "./konfig-db.php";
 <body>
 
     <div class="kontainer">
-    <h1>Bloggen</h1>
+        <h1>Bloggen</h1>
         <nav>
             <ul class="nav nav-tabs">
                 <li class="nav-item"><a class="nav-link" href="../lasa.php">Läsa</a></li>
-                <?php if (!$_SESSION['login']) { ?>
+                <?php if (!$_SESSION['login']) {?>
                 <li class="nav-item"><a class="nav-link" href="../sok.php">Sök</a></li>
                 <li class="nav-item"><a class="nav-link active" href="./admin.php">Admin</a></li>
                 <li class="nav-item"><a class="nav-link" href="./skriva.php">Skriva</a></li>
-                <?php } else {  ?>
-                
-                <?php } ?>
+                <?php } else {?>
+
+                <?php }?>
             </ul>
         </nav>
         <?php
-         /* 1. Logga in på mysql-servern och välj databas */
-         $conn = new mysqli($host, $användare, $lösenord, $databas);
-         /* Gick det ansluta? */
-         if ($conn->connect_error) {
-                 die("Kunde inte ansluta till databasen: " . $conn->connect_error);
-         } else {
-                 /* echo "<p>Yipee! Gick bra att ansluta.</p>"; */
-         }
- 
-         /* 2. SQL */
-         $sql = "SELECT * FROM blogg";
-         /* Bearbeta svaret frpån databasen */
-         $result = $conn->query($sql);
-         /* Gick det bra? */
-         if (!$result) {
-             die("Något blev fel med SQL-satsen");
-         } 
- 
-         /* 3. Ta emot svaren */
-          echo "<table>";
-          echo "<tr><th>Datum</th><th>Rubrik</th><th>Inlägg</th><th>Handling</th></tr>";
-          while ($rad = $result->fetch_assoc()) {
-             echo "<tr><td>$rad[datum]</td><td>$rad[rubrik]</td><td>$rad[inlagg]</td><td><a href=\"./redigera.php?id=$rad[id]\"><i class=\"fa fa-edit\"></i></a><a href=\"./radera.php?id=$rad[id]\"><i class=\"fa fa-trash\"></i></a></td></tr>";
-          }
-           /* 4. Stäng ned anslutningen */
+            /* 1. Logga in på mysql-servern och välj databas */
+            $conn = new mysqli($host, $användare, $lösenord, $databas);
+            /* Gick det ansluta? */
+            if ($conn->connect_error) {
+                die("Kunde inte ansluta till databasen: " . $conn->connect_error);
+            } else {
+                /* echo "<p>Yipee! Gick bra att ansluta.</p>"; */
+            }
+
+            /* 2. SQL */
+            $sql = "SELECT * FROM blogg";
+            /* Bearbeta svaret frpån databasen */
+            $result = $conn->query($sql);
+            /* Gick det bra? */
+            if (!$result) {
+                die("Något blev fel med SQL-satsen");
+            }
+
+            /* 3. Ta emot svaren */
+            echo "<table>";
+            echo "<tr><th>Datum</th><th>Rubrik</th><th>Inlägg</th><th>Handling</th></tr>";
+            while ($rad = $result->fetch_assoc()) {
+                echo "<tr><td>$rad[datum]</td><td>$rad[rubrik]</td><td>$rad[inlagg]</td><td><a href=\"./redigera.php?id=$rad[id]\"><i class=\"fa fa-edit\"></i></a><a href=\"./radera.php?id=$rad[id]\"><i class=\"fa fa-trash\"></i></a></td></tr>";
+            }
+            /* 4. Stäng ned anslutningen */
             $conn->close();
-        ?>
+            ?>
     </div>
 </body>
 </html>
