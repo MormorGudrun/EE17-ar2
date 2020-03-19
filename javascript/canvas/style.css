@@ -1,0 +1,21 @@
+body {
+    overflow: hidden;
+    background: #000;
+ }
+ canvas {
+    background: rgb(78, 76, 76);
+ }
+ #canvas{
+    border: 1px solid;
+    width: 800px;
+    height: 600px;
+ }
+ .kontainer{
+    color: #FFF;
+    background: #c0bdbd;
+    border: 2px solid #fff;
+    margin: 20px auto;
+    width: 800px;
+    display: grid;
+    grid-template-columns: auto auto;
+ }

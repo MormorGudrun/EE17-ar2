@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>greek</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <canvas id="canvas">
+        Ooops! Din webbläsare kan ej läsa Canvas...
+    </canvas>
+
+    <script>
+
+        /* Elementen vi använder */
+        const eCanvas = document.querySelector("#canvas");
+
+        /* Ställ in bredd och höjd samma som css */
+        eCanvas.width = eCanvas.scrollWidth;
+        eCanvas.height = eCanvas.scrollHeight;
+
+        /* Slå på ritmotorn */
+        var ctx = eCanvas.getContext("2d");
+
+        /* Rita en bana */
+        ctx.fillStyle = "blue";
+        ctx.fillRect(0, 0, 800, 600);
+        ctx.fill();
+        for (let i = 65; i < 500; i+= 130) {
+            ctx.fillStyle = "#fff";
+            ctx.fillRect(0, i, 800, 65)
+            
+        }
+        ctx.fill();
+        ctx.fillStyle = "blue";
+        ctx.fillRect(0, 0, 400, 300);
+        ctx.fill();
+        ctx.fillStyle = "#fff";
+        ctx.fillRect(0, 135, 400, 65);
+        ctx.fillRect(150, 0, 50, 330);
+        ctx.fill();
+
+        
+       
+
+    </script>
+</body>
+</html>

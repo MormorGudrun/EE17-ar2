@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Svenska flaggan</title>
+   
+</head>
+<body>
+    <canvas id="canvas" width="600" height="300" style="border: 1px solid black;">
+        Ooops! Din webbläsare kan ej läsa Canvas...
+    </canvas>
+
+    <script>
+
+        /* Elementen vi använder */
+        const eCanvas = document.querySelector("#canvas");
+
+        eCanvas.width = eCanvas.scrollWidth;
+        eCanvas.height = eCanvas.scrollHeight;
+
+        /* Slå på ritmotorn */
+        var ctx = eCanvas.getContext("2d");
+
+        /* Rita en bana */
+        ctx.beginPath();
+        ctx.fillStyle = "blue";
+        ctx.fillRect(0,0,canvas.width,canvas.height);
+
+        ctx.fillStyle = "yellow";
+        ctx.fillRect(0,100,canvas.width,canvas.height/4);
+
+        ctx.fillStyle = "yellow";
+        ctx.fillRect(150,0,canvas.width/6,canvas.height);
+
+    </script>
+</body>
+</html>

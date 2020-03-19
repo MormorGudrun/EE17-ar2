@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>canvas</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <canvas></canvas>
+    <button id="start">Start</button>
+    <script>
+            /* Elementen vi använder */
+            const eCanvas = document.querySelector("canvas");
+
+            /* Ställ in bredd och storlek = fullscreen */
+            eCanvas.width = 600;
+            eCanvas.height = 500;
+
+            /* Globala variablar */
+            var ctx = eCanvas.getContext("2d");
+            var boll = {
+                x: 200,
+                y: 200,
+                dx: 1,
+                dy: 1
+            };
+
+            ctx.strokeStyle = "red";
+            boll.x = Math.random() * 500 + 50;
+            boll.y = Math.random() * 400 + 50;
+            boll.dx = Math.random() * 5;
+            boll.dy = Math.random() * 5;
+            
+            
+
+            /* Rita flera cirklar */
+            /* for (var i = 0; i < 200; i++) {
+               console.log("i = ", i); */
+
+                /* Slumpa fram koordinater */
+                var x = Math.random() * 600;
+                var y = Math.random() * 500;
+                
+                function ritaBoll() {
+                    ctx.beginPath();
+                    ctx.arc(boll.x, boll.y, 30, 0, Math.PI * 2);
+                    ctx.stroke();
+                }
+
+            /* Animationsloopen */
+            var x = 200, y = 200, dx = 1, dy = 1;
+            function animate() {
+                /* Tömma skärmen */
+                ctx.clearRect(0, 0, 600, 500)
+                /* Rita bollen */
+                ritaBoll();
+ 
+                /* Studsa tillbaka från högerkanten */
+                if (boll.x > 600 - 30) {
+                    boll.dx = -boll.dx;
+                } 
+                /* Studsa tillbaka från vänsterkanten */
+                if (boll.x < 30) {
+                    boll.dx = -boll.dx;
+                } 
+                  /* Studsa tillbaka från högerkanten */
+                  if (boll.y > 500 - 30) {
+                    boll.dy = -boll.dy;
+                } 
+                /* Studsa tillbaka från vänsterkanten */
+                if (boll.y < 30) {
+                    boll.dy = -boll.dy;
+                } 
+                /* Förflytta bollen */
+                boll.x += boll.dx;
+                boll.y += boll.dy;
+               
+                
+
+                requestAnimationFrame(animate);
+            }
+            animate();
+    </script>
+</body>
+</html>

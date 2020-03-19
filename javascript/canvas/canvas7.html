@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>canvas</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <canvas></canvas>
+    <script>
+            /* Elementen vi använder */
+            const eCanvas = document.querySelector("canvas");
+
+            /* Ställ in bredd och storlek = fullscreen */
+            eCanvas.width = 600;
+            eCanvas.height = 500;
+
+      
+            /* Globala variablar */
+            var ctx = eCanvas.getContext("2d");
+            var lem = {
+            x: 300,
+            y: 250,
+            dx: 1,
+            dy: 1,
+            right: false,
+            left: false,
+            up: false,
+            down: false
+            };
+            
+            /* skapa en bildhehållare */
+            var image = new Image();
+            image.src = './bowserspray.png';
+
+            /* Lyssna på tagenterna */
+            window.addEventListener("keydown", knappIn);
+        function knappIn(e) {
+            console.log("e.key = ", e.key);
+            if (e.key == "ArrowRight") {
+                lem.right = true;
+            }
+            if (e.key == "ArrowLeft") {
+                lem.left = true;
+            }
+            if (e.key == "ArrowDown") {
+                lem.down = true;
+            }
+            if (e.key == "ArrowUp") {
+                lem.up = true;
+            }
+        }
+        window.addEventListener("keyup", knappUt);
+        function knappUt(e) {
+            console.log("e.key = ", e.key);
+            if (e.key == "ArrowRight") {
+                lem.right = false;
+            }
+            if (e.key == "ArrowLeft") {
+                lem.left = false;
+            }
+            if (e.key == "ArrowDown") {
+                lem.down = false;
+            }
+            if (e.key == "ArrowUp") {
+                lem.up = false;
+            }
+        }
+
+        /* Loopen */
+        function animate() {
+            /* Tömma skärmen */
+            ctx.clearRect(0, 0, 600, 500);
+
+            /* Räkna ut koordinaterna */
+            if (lem.right) {
+                lem.x += lem.dx;
+            }
+            if (lem.left) {
+                lem.x -= lem.dx;
+            }
+            if (lem.down) {
+                lem.y += lem.dy;
+            }
+            if (lem.up) {
+                lem.y -= lem.dy;
+            }
+
+            /* Inte ramla utanför canvas */
+            if (lem.y > 525) {
+                lem.y = -25;
+            } else if (lem.y < -25) {
+                lem.y = 525;
+            }
+            if (lem.x > 625) {
+                lem.x = -25;
+            } else if (lem.x < -25) {
+                lem.x = 625;
+            }
+
+            /* Rita ut bilden */
+            ctx.drawImage(image, lem.x - 25, lem.y - 25, 50, 50);
+            requestAnimationFrame(animate);
+            }
+            animate();
+            
+    </script>
+</body>
+</html>

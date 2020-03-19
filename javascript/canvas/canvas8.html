@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="sv">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Grunder i 2d med canvas</title>
+        <link rel="stylesheet" href="canvas8.css" />
+    </head>
+    <body>
+        <canvas></canvas>
+        <script>
+            /* Element vi arbetar med */
+            const eCanvas = document.querySelector("canvas");
+
+            /* Ställ in bredd och storlek = fullscreen */
+            eCanvas.width = 600;
+            eCanvas.height = 500;
+
+            /* Globala variabler */
+            var ctx = eCanvas.getContext("2d");
+            var lem = {
+                x: 300,
+                y: 250,
+                a: 0,
+                s: 0,
+                dx: 0,
+                dy: 0,
+                da: 0,
+                cw: false,
+                ccw: false,
+                gas: false
+            };
+            var stop = false;
+
+            /* Skapa en bildbehållare */
+            var image = new Image();
+            image.src = "./bowserspray.png";
+
+            /* Lyssna på tangenterna */
+            window.addEventListener("keydown", knappIn);
+            function knappIn(e) {
+                console.log("e.key = ", e.key);
+                if (e.key == "ArrowRight") {
+                    lem.cw = true;
+                }
+                if (e.key == "ArrowLeft") {
+                    lem.ccw = true;
+                }
+                if (e.key == " ") {
+                    lem.gas = true;
+                }
+            }
+            window.addEventListener("keyup", knappUt);
+            function knappUt(e) {
+                console.log("e.key = ", e.key);
+                if (e.key == "ArrowRight") {
+                    lem.cw = false;
+                }
+                if (e.key == "ArrowLeft") {
+                    lem.ccw = false;
+                }
+                if (e.key == " ") {
+                    lem.gas = false;
+                }
+            }
+
+            /* Loopen */
+            ctx.font = "20px Arial";
+            ctx.fillStyle = "#FFF";
+            function animate() {
+                /* Tömma skärmen */
+                ctx.clearRect(0, 0, 600, 500);
+
+                /* Visa en panel */
+                ctx.fillText("Radar: " + (450.5 - lem.y).toFixed(0), 350, 20);
+                ctx.fillText("Fart: " + Math.abs(lem.dy.toFixed(1)), 500, 20);
+
+                /* Inte ramla utanför canvas */
+                if (lem.y >= 450) {
+                    lem.y = 450;
+
+                    /* Kollar om man kraschar */
+                    if (lem.dy < 0.3) {
+                        ctx.fillText("The Eagle has landed!", 350, 50);
+                    } else {
+                        ctx.fillText("Disaster!", 350, 50);
+                    }
+                    lem.dy = 0;
+                    stop = true;
+                } else if (lem.y < -25) {
+                    lem.y = -25;
+                }
+                if (lem.x > 625) {
+                    lem.x = -25;
+                } else if (lem.x < -25) {
+                    lem.x = 625;
+                }
+
+                /* Rotera månlandaren */
+                if (lem.cw) {
+                    lem.da += 0.0005;
+                } else if (lem.ccw) {
+                    lem.da -= 0.0005;
+                } else if (lem.gas) {
+                    lem.s += 0.0002;
+                    lem.dx += Math.sin(lem.a) * lem.s;
+                    lem.dy -= Math.cos(lem.a) * lem.s;
+                }
+                lem.a += lem.da;
+                lem.x += lem.dx;
+                lem.y += lem.dy;
+
+                /* Gravitationens kraft på månlandaren */
+                lem.dy += 0.005;
+
+                /* Rita ut månlandaren */
+                ctx.save();
+                ctx.translate(lem.x, lem.y);
+                ctx.rotate(lem.a);
+                if (lem.gas) {
+                    ctx.beginPath();
+                    ctx.fillStyle = "#fffd89";
+                    ctx.lineTo(-5, 0);
+                    ctx.lineTo(5, 0);
+                    ctx.lineTo(0, 50);
+                    ctx.closePath();
+                    ctx.fill();
+                }
+                ctx.drawImage(image, -25, -25, 50, 50);
+                ctx.restore();
+
+                /* Avbryt loopen! */
+                if (stop) {
+                    return;
+                }
+                requestAnimationFrame(animate);
+            }
+            animate();
+        </script>
+    </body>
+</html>

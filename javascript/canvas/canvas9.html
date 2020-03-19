@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Canvas</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="kontainer">
+        <canvas></canvas>
+        <div class="kolumn">
+            <h1>Pong</h1>
+            <button id="start" class="btn btn-light">Start</button>
+            <button id="stop" class="btn btn-secondary">Stop</button>
+        </div>
+    </div>
+    <script>
+        /* Globala constanter */
+        const Canvas = document.querySelector("canvas");
+        const knappStart = document.querySelector("#start");
+        const knappStop = document.querySelector("#stop");
+
+        /* Ställ in bredd och storlek = fullscreen */
+        Canvas.width = 600;
+        Canvas.height = 500;
+
+        /* Globala variabler */
+        var ctx = Canvas.getContext("2d");
+        var boll = {
+            radie : 15,
+            x : 200,
+            y : 200,
+            dx : 1,
+            dy : 1
+        };
+        var racket = {
+            x: 10,
+            y: 0,
+            ned: false,
+            upp: false,
+            bredd: 20,
+            höjd: 100
+        }
+        
+        var startFlagga = false;
+        var poäng = 1;
+
+          /* Starta spelet när vi trycker på knappen */
+          knappStart.addEventListener("click", function () {
+            if (!startFlagga) {
+                startFlagga = true;
+                reset();
+            }
+        });
+
+        /* Stanna spelet när man trycker på stop */
+        knappStop.addEventListener("click", function () {
+            startFlagga = false;
+        });
+
+        /* Lyssna på tagnenterna */
+        window.addEventListener("keydown", function (e){
+            switch (e.key) {
+                case "ArrowUp":
+                racket.upp = true;
+                break;
+                case "ArrowDown":
+                racket.ned = true;
+
+                break;
+
+            }
+        });
+        window.addEventListener("keyup", function (e){
+            switch (e.key) {
+                case "ArrowUp":
+                racket.upp = false;
+                break;
+                case "ArrowDown":
+                racket.ned = false;
+
+                break;
+
+            }
+        });
+
+        /* Start värden */
+        ctx.fillStyle = "#FFF";
+        function reset () { 
+            boll.x =  Math.ceil(Math.random() * 500 + 50);
+            boll.y =  Math.ceil(Math.random() * 400 + 50);
+            boll.dx = Math.ceil(Math.random() * 5);
+            boll.dy = Math.ceil(Math.random() * 5);
+            animate();
+        }   
+
+        /* Rita en boll */
+        function ritaBoll() {
+            ctx.beginPath();
+            ctx.arc(boll.x, boll.y, boll.radie, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        /* Rita en racket */
+        function ritaRacket() {
+            ctx.beginPath();
+            ctx.fillRect(racket.x, racket.y, racket.bredd, racket.höjd);
+        }
+
+
+        /* Animations-loopen */
+        function animate() {
+            /* Tömma skärmen */
+            ctx.clearRect(0, 0, 600, 500);
+
+            /* Rita bollen */
+            ritaBoll();
+
+            /* Rita racket */
+            ritaRacket();
+            /* flytta racket */
+            if (racket.ned) {
+                if (racket.y < (500 - racket.höjd)) {
+                    racket.y += 3;
+                }
+                
+            }
+            if (racket.upp) {
+                if (racket.y > 0) {
+                    racket.y -= 3;
+                } 
+            }
+
+            /* Bollen ska studsa på racketen */
+            if ((boll.y >= racket.y) && (boll.y <= (racket.y + racket.höjd))) {
+                if (boll.x - boll.radie <= racket.x + racket.bredd) {
+                    console.log("Träff", poäng);
+                    boll.dx = -boll.dx;
+                    poäng++;
+                  
+                } 
+            }
+            /* Bollen träffar väggen bakom raketen */
+            if (boll.x <= 0) {
+                console.log("Game Over!"); 
+                startFlagga = false;
+            }
+            /* Studsa tillbaka från högerkanten */
+            if (boll.x > 575) {
+                boll.dx = -boll.dx;
+            }
+           
+           /* Studsa tillbaka från vänsterkanten */
+            if (boll.y > 475 || boll.y < boll.radie){
+                boll.dy = -boll.dy;
+            }
+            boll.x += boll.dx;
+            boll.y += boll.dy;
+
+            /* Här kan vi pausa spelet */
+            if (startFlagga) {
+                requestAnimationFrame(animate)
+            }
+            
+        }
+    </script>
+</body>
+</html>

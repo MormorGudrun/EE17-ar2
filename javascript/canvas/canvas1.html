@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>canvas</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <canvas id="canvas">
+        Ooops! Din webbläsare kan ej läsa Canvas...
+    </canvas>
+
+    <script>
+
+        /* Elementen vi använder */
+        const eCanvas = document.querySelector("#canvas");
+
+        /* Ställ in bredd och höjd samma som css */
+        eCanvas.width = eCanvas.scrollWidth;
+        eCanvas.height = eCanvas.scrollHeight;
+
+        /* Slå på ritmotorn */
+        var ctx = eCanvas.getContext("2d");
+
+        /* Testa rita en rektangel */
+        ctx.fillStyle = "green";
+        ctx.fillRect(10, 10, 100, 100);
+
+        ctx.strokeStyle = "red";
+        ctx.strokeRect(200, 10, 100, 100);
+
+        ctx.fillStyle = "blue";
+        ctx.beginPath();
+        ctx.arc(400, 60, 50, 0, Math.PI*2);
+        ctx.fill();
+
+        ctx.strokeStyle = "purple";
+        ctx.beginPath();
+        ctx.arc(550, 60, 50, 0, Math.PI*2);
+        ctx.stroke();
+
+        ctx.fillStyle = "pink";
+        ctx.beginPath();
+        ctx.arc(700, 60, 50, 0, Math.PI/2);
+        ctx.lineTo(700, 60);
+        ctx.fill();
+        
+    </script>
+</body>
+</html>
