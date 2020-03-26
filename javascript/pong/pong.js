@@ -31,11 +31,12 @@ var racket = {
 var startFlagga = false;
 var poäng = 0;
 
+/* Hämta highscore från databasen */
+lasaHighscore();
+
 /* Skapa ljudobjekt */
 studs = new Audio("./studs.wav");
 smash = new Audio("./smash.wav");
-
-/* Läs highscore från databasen */
 
 /* Starta spelet när vi trycker på Start */
 eForm.addEventListener("submit", function(e) {
@@ -44,6 +45,7 @@ eForm.addEventListener("submit", function(e) {
     if (!startFlagga) {
         startFlagga = true;
         reset();
+        sparaNamn();
     }
 });
 
@@ -104,6 +106,7 @@ function gameOver() {
     ctx.fillStyle = "#FFF";
     ctx.textAlign = "center";
     ctx.fillText("Game Over!", 300, 200);
+    sparaPoäng();
 }
 
 /* Animationsloopen */
@@ -172,4 +175,68 @@ function animate() {
     if (startFlagga) {
         requestAnimationFrame(animate);
     }
+}
+
+function sparaNamn() {
+    var namn = eNamn.value;
+    console.log("namn=", namn);
+
+    /* Låser input-rutan */
+    eNamn.readyOnly;
+
+    /* Skapa ajax för att kunna skicka data */
+    var ajax = new XMLHttpRequest();
+    
+    /* Omvandla data till POST */
+    var postData = new FormData();
+    postData.append("namn", namn);
+
+    /* Skicka data */
+    ajax.open("POST", "./spara-namn.php");
+    ajax.send(postData);
+
+    /* Ta emot svaret */
+    ajax.addEventListener("loadend", function() {
+        console.log("Tar emot svar=", this.responseText);
+        
+    });
+}
+
+/* Uppdatera spelarens poäng: skicka namn & poäng */
+function sparaPoäng() {
+
+    var namn = eNamn.value;
+
+    /* Skapa ajax för att kunna skicka data */
+    var ajax = new XMLHttpRequest();
+
+    /* Omvandla data till POST */
+    var postData = new FormData();
+    postData.append("namn", namn);
+    postData.append("poäng", poäng);
+
+    /* Skicka data */
+    ajax.open("POST", "./spara-poäng.php");
+    ajax.send(postData);
+
+    /* Ta emot svaret */
+    ajax.addEventListener("loadend", function() {
+        console.log("Tar emot svar=", this.responseText);
+        
+    });
+}
+/* Hämta highscore, dvs 5 högsta poäng */
+function lasaHighscore() {
+    /* Skapa ajax för att kunna skicka data */
+    var ajax = new XMLHttpRequest();
+
+    /* Gör ett anrop */
+    ajax.open("POST", "./lasa-highscore.php");
+    ajax.send();
+
+    /* Ta émot svaret */
+    ajax.addEventListener("loadend", function () {
+       console.log("Tar emot svar=", this.responseText);
+       eHighscore.innerHTML = this.responseText;
+    });
 }

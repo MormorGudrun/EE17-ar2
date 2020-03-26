@@ -1,0 +1,35 @@
+body {
+    overflow: hidden;
+    background: #000;
+}
+canvas {
+    background: #202020;
+}
+#canvas {
+    border: 1px solid;
+    width: 800px;
+    height: 600px;
+}
+.kontainer {
+    color: #FFF;
+    background: #999;
+    border: 2px solid #FFF;
+    margin: 20px auto;
+    width: 900px;
+    display: grid;
+    grid-template-columns: auto auto;
+}
+.kolumn {
+    padding: 20px;
+}
+h4 {
+    margin-top: 20px;
+}
+input {
+    width: 100%;
+    margin: 5px 0;
+    margin-bottom: 20px;
+}
+table {
+    width: 100%;
+}
