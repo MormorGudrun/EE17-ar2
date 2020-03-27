@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bowser Racet</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./nyckelpiga.css">
+</head>
+<body>
+    <canvas></canvas>
+    <script>
+        /* Element vi arbetar med */
+        const eCanvas = document.querySelector("canvas");
+
+        /* Ställ in bredd och storlek */
+        eCanvas.width = 800;
+        eCanvas.height = 600;
+
+        /* Globala variabler */
+        var ctx = eCanvas.getContext("2d");
+        /* Ladda in tilesheet */
+        var tileSheet = new Image();
+        tileSheet.src = "./tilesheet.png";
+
+        tileSheet.addEventListener("load", function() {
+            
+            /* Rita första rutan */
+            ctx.drawImage(tileSheet, 0, 0, 32, 32, 100, 100, 50, 50);
+
+            /* Rita andra rutan  */
+            ctx. drawImage(tileSheet, 32, 0, 32, 32, 100, 200, 50, 50);
+
+            /* Rita tredje rutan  */
+            ctx. drawImage(tileSheet, 96, 0, 32, 32, 100, 300, 50, 50);
+
+            /* Rita fjärde rutan  */
+            ctx. drawImage(tileSheet, 224, 0, 32, 32, 100, 400, 50, 50);
+
+            /* Rita ut en väg  */
+            for (var i = 0; i < 10; i++) {
+                var x = 1 * 50;
+                ctx.drawImage(tileSheet, 0, 0, 32, 32, x, 500, 50, 50);
+            }
+
+            var karta = [0, 1, 3, 1, 0];
+            for (var i = 0; i < karta.length; 1++) {
+                var x = i * 50;
+                var rutaPos = karta[i] * 32;
+                ctx.drawImage(tileSheet, rutaPos, 0, 32, 32, x, 0, 50, 50);
+                
+                
+            }
+        });
+    </script>
+</body>
+</html>

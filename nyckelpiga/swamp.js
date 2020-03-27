@@ -12,30 +12,40 @@ var piga = {
     kol: 0,
     rot: 0,
     bild: new Image() 
-}
+};
+var monster = {
+    x: 0,
+    y: 0,
+    bild: new Image()
+};
 var karta = [
-    [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,],
-    [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1,],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,],
-    [1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1,],
-    [1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1,],
-    [1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1,],
-    [1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1,],
-    [1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1,],
-    [1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1,],
-    [1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0,],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,]
+    [0, 0, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35],
+    [35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35],
+    [35, 0, 31, 0, 31, 0, 31, 0, 31, 0, 31, 0, 15, 15, 0, 35],
+    [35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35],
+    [35, 0, 31, 0, 31, 0, 31, 0, 1, 2, 3, 0, 1, 3, 0, 35],
+    [35, 0, 0, 0, 0, 0, 0, 0, 11, 12, 23, 0, 21, 23, 0, 35],
+    [35, 0, 31, 0, 31, 0, 31, 0, 11, 13, 0, 0, 0, 0, 0, 35],
+    [35, 0, 0, 0, 0, 0, 0, 0, 11, 13, 0, 15, 15, 15, 15, 35],
+    [35, 0, 15, 0, 15, 0, 15, 0, 11, 13, 0, 15, 0, 0, 0, 35],
+    [35, 0, 15, 0, 15, 0, 15, 0, 11, 13, 0, 15, 0, 35, 0, 35],
+    [35, 0, 0, 0, 0, 0, 0, 0, 11, 13, 0, 0, 0, 35, 0, 0],
+    [35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35]
 ];
 
 /* ladda in tilesheet */
 var tileSheet = new Image();
-tileSheet.src = "./tilesheet.png";
+tileSheet.src = "./tilesheet-swamp.png";
 
 /* Nyckelpigasn startläge */
 piga.rad = 0; 
 piga.kol = 0; 
 piga.bild.src = "./Paper-Bowser-icon.png";
+
+/* Monstrets start läge */
+monster.x = 0;
+monster.y = 0;
+monster.bild.src = "./svamp-mon.png";
 
 /* Rita ut Bowser */
 function ritaPiga() {
@@ -46,6 +56,13 @@ function ritaPiga() {
     ctx.restore();
 
 }
+function ritaMonster() {
+    ctx.save();
+    ctx.translate(monster.y * 50 + 25, monster.x * 50 + 25);
+    ctx.rotate(monster.x);
+    ctx.drawImage(monster.bild, -25, -25, 50, 50);
+    ctx.restore();
+}
 
 /* Rita ut karta */
 function ritaKarta() {
@@ -53,11 +70,12 @@ function ritaKarta() {
     for (let rad = 0; rad < karta.length; rad++) {
         /* Gå igenom varige kollum */
       for (let kol = 0; kol < karta[rad].length; kol++) {
-         if (karta[rad][kol] == 1) {
+         if (karta[rad][kol] != 0) {
              /* Rita ut en svart fyrkant 50x50 pixlar */
-             var rutaPos = karta[rad][kol] * 32;
-             ctx.drawImage(tileSheet, rutaPos, 0, 32, 32, kol * 50, rad * 50, 50, 50);
-             //ctx.fillRect(kol * 50, rad * 50, 50, 50);
+             var rutaPos = (karta[rad][kol] % 10) * 32 - 32;
+             var rutaPosRad = Math.ceil(karta[rad][kol] / 10) * 32 -32;
+             ctx.drawImage(tileSheet, rutaPos, rutaPosRad, 32, 32, kol * 50, rad * 50, 50, 50);
+             
          }    
       }  
     }
