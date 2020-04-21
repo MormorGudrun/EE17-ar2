@@ -37,19 +37,19 @@ var mynt1 = {
     bild: new Image()
 }
 var poäng = 0;
-var gameOver = false;
+var isGameOver = false;
 var karta = [
-    [0, 0, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35],
-    [35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35],
-    [35, 0, 31, 0, 31, 0, 31, 0, 31, 0, 31, 0, 15, 15, 0, 35],
-    [35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35],
-    [35, 0, 31, 0, 31, 0, 31, 0, 1, 2, 3, 0, 1, 3, 0, 35],
-    [35, 0, 0, 0, 0, 0, 0, 0, 11, 12, 23, 0, 21, 23, 0, 35],
-    [35, 0, 31, 0, 31, 0, 31, 0, 11, 13, 0, 0, 0, 0, 0, 35],
+    [0, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35],
+    [0, 0, 0, 0, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35],
+    [35, 35, 35, 0, 35, 0, 35, 35, 35, 35, 35, 0, 15, 15, 0, 35],
+    [35, 0, 0, 0, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35],
+    [35, 0, 35, 35, 35, 0, 35, 0, 1, 2, 3, 0, 1, 3, 0, 35],
+    [35, 0, 0, 0, 35, 0, 0, 0, 11, 12, 23, 0, 21, 23, 0, 35],
+    [35, 35, 35, 0, 35, 0, 35, 0, 11, 13, 0, 0, 0, 0, 0, 35],
     [35, 0, 0, 0, 0, 0, 0, 0, 11, 13, 0, 15, 15, 15, 15, 35],
-    [35, 0, 15, 0, 15, 0, 15, 0, 11, 13, 0, 15, 0, 0, 0, 35],
-    [35, 0, 15, 0, 15, 0, 15, 0, 11, 13, 0, 15, 0, 35, 0, 35],
-    [35, 0, 0, 0, 0, 0, 0, 0, 11, 13, 0, 0, 0, 35, 0, 0],
+    [35, 0, 35, 0, 35, 0, 15, 0, 11, 13, 0, 15, 0, 0, 0, 35],
+    [35, 0, 35, 0, 35, 0, 15, 0, 11, 13, 0, 15, 0, 35, 0, 35],
+    [35, 0, 35, 0, 0, 0, 0, 0, 11, 13, 0, 0, 0, 35, 0, 0],
     [35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35]
 ];
 
@@ -97,7 +97,7 @@ gameLoop();
 function ritaPiga() {
     ctx.save();
     ctx.translate(piga.kol * 50 + 25, piga.rad * 50 + 25);
-    ctx.rotate(piga.rot);
+    ctx.rotate(piga.rot * (Math.PI / 180));
     ctx.drawImage(piga.bild, -25, -25, 50, 50);
     ctx.restore();
 
@@ -120,7 +120,7 @@ function krock(figur) {
             ctx.fillRect(0, 0, 800, 600);
             ctx.fillStyle = "red";
             ctx.fillText("Game Over!", 400, 300); 
-            gameOver = true;
+            ameOver = true;
         }
     }
 }
@@ -168,13 +168,13 @@ window.addEventListener("keydown", function (e) {
             if (karta[piga.rad][piga.kol + 1] == 0) {
                 piga.kol++;  
             }
-            piga.rot = 180 * (Math.PI / 180);
+            piga.rot = 180;
             break;
             case "ArrowLeft":
             if (karta[piga.rad][piga.kol - 1] == 0) {
                 piga.kol--;
             }
-            piga.rot = 180 * (Math.PI / 0);
+            piga.rot = 0;
             break;
             case "ArrowUp":
             if (karta[piga.rad - 1][piga.kol] == 0) {
@@ -186,7 +186,7 @@ window.addEventListener("keydown", function (e) {
             if (karta[piga.rad + 1][piga.kol] == 0) {
                 piga.rad++;  
             }
-            piga.rot = Math.PI;
+            piga.rot = 180;
             break;
             
     }
@@ -210,7 +210,7 @@ function gameLoop() {
     
     
 
-    if (!gameOver) {
+    if (!isGameOver) {
         requestAnimationFrame(gameLoop); 
     } 
      

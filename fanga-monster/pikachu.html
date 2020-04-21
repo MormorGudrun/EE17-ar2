@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Canvas</title>
+    <link rel="stylesheet" href="./pikachu.css">
+</head>
+<body>
+    <div class="kol2">
+        <canvas></canvas>
+        <div>
+            <h1>Rädda Pikachu</h1>
+
+        </div>
+    </div>
+    <script>
+        /* Ikoner från https://icons8.com/icon/set/game/color */
+        /* Ställ in canvas */
+        const eCanvas = document.querySelector("canvas");
+        eCanvas.width = 1200;
+        eCanvas.height = 1000;
+        var ctx = eCanvas.getContext("2d");
+
+        /* ****************************** */
+        /*           Objekten             */
+        /* ****************************** */
+
+        var spel = {
+            poäng: 0,
+            key: 0,
+            isGameOver: false
+        }
+
+        var pikachu = {
+            x: 0,
+            y: 900,
+            liv: 3,
+            bild: new Image()
+        };
+        var pokeball = {
+            x: 0,
+            y: 900,
+            dy: 0,
+            fire: false,
+            bild: new Image()
+        }
+        var explosion = {
+            bild: new Image()
+        }
+
+        var pidgey = {
+            x: Math.random() * 1100,
+            y: 0,
+            dy: Math.ceil(Math.random() * 5),
+            bild: new Image()
+        };
+        var psyduck = {
+            x: Math.random() * 1100,
+            y: 0,
+            dy: Math.ceil(Math.random() * 5),
+            bild: new Image()
+        };
+        var desura = {
+            x: Math.random() * 1100,
+            y: 0,
+            dy: Math.ceil(Math.random() * 5),
+            bild: new Image()
+        };
+        var eevee = {
+            x: Math.random() * 1100,
+            y: 0,
+            dy: Math.ceil(Math.random() * 5),
+            bild: new Image()
+        };
+        var jigglypuff = {
+            x: Math.random() * 1100,
+            y: 0,
+            dy: Math.ceil(Math.random() * 5),
+            bild: new Image()
+        }
+        var meowth = {
+            x: Math.random() * 1100,
+            y: 0,
+            dy: Math.ceil(Math.random() * 5),
+            bild: new Image()
+        };
+        var mankey = {
+            x: Math.random() * 1100,
+            y: 0,
+            dy: Math.ceil(Math.random() * 5),
+            bild: new Image()
+        };
+        var dratini = {
+            x: Math.random() * 1100,
+            y: 0,
+            dy: Math.ceil(Math.random() * 5),
+            bild: new Image()
+        };
+        var piggies = {
+            x: Math.random() * 1100,
+            y: 0,
+            dy: Math.ceil(Math.random() * 5),
+            bild: new Image()
+        };
+        var crash = {
+            x: Math.random() * 1100,
+            y: 0,
+            dy: Math.ceil(Math.random() * 5),
+            bild: new Image()
+        };
+
+        /* Ladda in bilderna */
+        pikachu.bild.src = "./icon8/icon8/icons8-pikachu-pokemon-96.png";
+        pokeball.bild.src = "./icon8/icon8/icons8-pokeball-48.png";
+        explosion.bild.src = "./icon8/icon8/icons8-explosion-96.png";
+        pidgey.bild.src = "./icon8/icon8/icons8-pidgey-50.png";
+        psyduck.bild.src = "./icon8/icon8/icons8-psyduck-50.png";
+        desura.bild.src = "./icon8/icon8/icons8-desura-50.png";
+        eevee.bild.src = "./icon8/icon8/icons8-eevee-50.png";
+        meowth.bild.src = "./icon8/icon8/icons8-meowth-50.png";
+        mankey.bild.src = "./icon8/icon8/icons8-mankey-50.png";
+        dratini.bild.src = "./icon8/icon8/icons8-dratini-50.png";
+        piggies.bild.src = "./icon8/icon8/icons8-bad-piggies-50.png";
+        crash.bild.src = "./icon8/icon8/icons8-crash-bandicoot-50.png";
+
+        /* Skapa alla monster */
+        class Monster {
+            pidgey() {
+                ctx.drawImage(pidgey.bild, 0, 0, 50, 50, pidgey.x, pidgey.y, 50, 50);
+                pidgey.y += pidgey.dy;
+                if (pidgey.y >= 1000) {
+                    pidgey.y = 0;
+                }
+            }
+            psyduck() {
+                ctx.drawImage(psyduck.bild, 0, 0, 50, 50, psyduck.x, psyduck.y, 50, 50);
+                psyduck.y += psyduck.dy
+                if (psyduck.y >= 1000) {
+                    psyduck.y = 0;
+                }
+            }
+            desura() {
+                ctx.drawImage(desura.bild, 0, 0, 50, 50, desura.x, desura.y, 50, 50);
+                desura.y += desura.dy;
+                if (desura.y >= 1000) {
+                    desura.y = 0;
+                }
+            }
+            eevee() {
+                ctx.drawImage(eevee.bild, 0, 0, 50, 50, eevee.x, eevee.y, 50, 50);
+                eevee.y += eevee.dy;
+                if (eevee.y >= 1000) {
+                    eevee.y = 0;
+                }
+            }
+            meowth() {
+                ctx.drawImage(meowth.bild, 0, 0, 50, 50, meowth.x, meowth.y, 50, 50);
+                meowth.y += meowth.dy;
+                if (meowth.y >= 1000) {
+                    meowth.y = 0;
+                }
+            }
+            mankey() {
+                ctx.drawImage(mankey.bild, 0, 0, 50, 50, mankey.x, mankey.y, 50, 50);
+                mankey.y += mankey.dy;
+                if (mankey.y >= 1000) {
+                    mankey.y = 0;
+                }
+            }
+            dratini() {
+                ctx.drawImage(dratini.bild, 0, 0, 50, 50, dratini.x, dratini.y, 50, 50);
+                dratini.y += dratini.dy;
+                if (dratini.y >= 1000) {
+                    dratini.y = 0;
+                }
+            }
+            piggies() {
+                ctx.drawImage(piggies.bild, 0, 0, 50, 50, piggies.x, piggies.y, 50, 50);
+                piggies.y += piggies.dy;
+                if (piggies.y >= 1000) {
+                    piggies.y = 0;
+                }
+            }
+            crash() {
+                ctx.drawImage(crash.bild, 0, 0, 50, 50, crash.x, crash.y, 50, 50);
+                crash.y += crash.dy;
+                if (crash.y >= 1000) {
+                    crash.y = 0;
+                }
+            }
+            jigglypuff() {
+                ctx.drawImage(jigglypuff.bild, 0, 0, 50, 50, jigglypuff.x, jigglypuff.y, 50, 50);
+                jigglypuff.y += jigglypuff.dy;
+                if (jigglypuff.y >= 1000) {
+                    jigglypuff.y = 0;
+                }
+            }
+        }
+        var monster = new Monster();
+
+        /* ****************************** */
+        /*     Starta animationsloopen    */
+        /* ****************************** */
+        loopen();
+
+        /* ****************************** */
+        /*            Funktioner          */
+        /* ****************************** */
+
+        /* Rita ut pikachu */
+        function ritaPikachu() {
+            ctx.drawImage(pikachu.bild, 0, 0, 96, 96, pikachu.x, pikachu.y, 96, 96);
+        }
+
+        /* Rita ut pokeball */
+        function ritaPokeball() {
+            
+        }
+
+        /* Rita ut monster */
+        function ritaMonster(figur) {
+            /* Spawna om */
+
+            /* Om kollision explodera */
+
+        }
+
+        /* https://keycode.info */
+        function uppdatera() {
+            switch (spel.key) {
+                case 39: // Pil åt höger
+                    pikachu.height = true;
+                    break;
+                case 37: // pil åt vänster
+
+                    break;
+                case 32: // Mellanslag
+
+                    break;
+            }
+        }
+
+        /* Animationsloopen */
+        function loopen() {
+            ctx.clearRect(0, 0, eCanvas.width, eCanvas.height);
+
+            /* Rita ut pikachu */
+            ritaPikachu();
+
+            /* Rita ut monstren */
+            monster.pidgey();
+            monster.psyduck();
+            monster.desura();
+            monster.eevee();
+            monster.meowth();
+            monster.mankey();
+            monster.dratini();
+            monster.piggies();
+            monster.crash();
+            monster.jigglypuff();
+
+
+            /* Rita ut pokeball-skottet */
+            ritaPokeball();
+            /* Uppdatera positioner */
+
+
+            requestAnimationFrame(loopen);
+        }
+
+        /* Lyssna på input */
+        window.addEventListener("keydown", function(e) {
+            spel.key = e.keyCode;
+        });
+        window.addEventListener("keyup", function(e) {
+            spel.key = 0;
+        });
+    </script>
+</body>
+</html>
